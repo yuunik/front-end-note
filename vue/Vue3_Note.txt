@@ -1,0 +1,30 @@
+1/ option api 中可以获取到 setup 中的属性与方法
+2/ vue3 兼容 vue2 的语法
+3/ setup 的执行时机在 beforeCreated 生命周期之前
+4/ 当想给组件取别名时, 有二种方式
+      1) <script lang='ts'>
+            export default {
+              name: 'XXX'
+            }
+         </script>
+         <script lang='ts' setup>
+
+         </script>
+
+         此时, 组件文件中需要存在 2 个 script 标签。
+      2) 下载 vite-plugin-vue-setup-extend  插件, 此插件只能在开发环境中使用。
+            npm i vite-plugin-vue-setup-extend -D
+            配置 vite.config.ts
+                import { defineConfig } from 'vite'
+                import VueSetupExtend from 'vite-plugin-vue-setup-extend'
+
+                export default defineConfig({
+                  plugins: [ VueSetupExtend() ]
+                })
+            在组件文件中, 给 script 标签添加 name 属性
+              <script setup lang='ts' name='XXX'></script>
+5/ reactive 重新分配一个新对象，会失去响应式（可以使用Object.assign去整体替换）。
+6/ reactive 定义的响应式对象是默认开启深度监视的。
+// ** 默认暴露 export default
+      统一暴露
+      分别暴露 export [语句的类型]

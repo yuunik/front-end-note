@@ -1,0 +1,4 @@
+ctrl + shift + k 删除一行
+ctrl + enter 切换下一行
+ctrl + shift + up 复制本行至上一行
+ctrl + shift + down 复制本行至下一行
