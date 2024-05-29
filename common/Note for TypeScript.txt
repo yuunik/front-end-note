@@ -1,0 +1,5 @@
+1. 下载工程所需要的 npm 包。
+2. 下载 less less-loader css-loader style-loader 包。用于编译并打包 less 文件。
+3. 下载 postcss postcss-loader postcss-preset-env（浏览器预制环境） 包。做浏览器的兼容性处理。
+在 less-loader 包把 less 文件转译后,应立即给 postcss-loader 包做兼容性处理。然后才给后续的
+css-loader style-loader处理。

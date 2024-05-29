@@ -1,0 +1,9 @@
+1. data 中的所有属性, 最后都出现在了 vm 身上。
+2. vm 身上所有的属性 及 Vue 原型上的所有属性, 在 Vue 模板上都可以直接使用。
+3. 实例对象的隐式原型属性永远指向自己的制造者的原型对象。
+即：
+    const obj = new Object();
+    则 obj.__proto__ = Object.protoType;
+4. VueComponent.protoType.__proto__ = Vue.protoType;
+5. 对组件实例对象如何理解？
+  一个小型的 vm , 它的 data 必须写成一个函数,不能写成一个对象。

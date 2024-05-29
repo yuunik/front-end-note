@@ -1,0 +1,74 @@
+通常以 iPhone 6 为标准设计稿, 则 1px = 2rpx
+1. app.json
+    window property
+      上拉触底 onReachBottomDistance 的默认距离为 50px
+2. 网络请求
+    只能请求 https 类型的接口
+    必须将 接口的域名 添加至 信任列表(详情 ---- 项目配置 ---- request 合法域名) 中
+3. 小程序组件的声明周期
+      created
+        不能调用 setData
+      attached
+        可进行数据初始化工作, this.data 已被初始化完毕
+      ready
+      moved
+      detached
+        可进行清理性的工作
+      error
+
+      --- 可在 Components.lifetimes 中直接定义 组件生命周期
+          也可在 Components 中直接定义
+          但 Components.lifetimes 的生命周期 会把 Components 中的生命周期直接覆盖掉
+4. 小程序组件的页面生命周期
+      show
+        组件所在的页面被展示时执行
+      hide
+        组件所在的页面被隐藏时执行
+      resize
+        组件所在的页面尺寸变化时执行
+
+      --- 可在 Components.pageLifetimes 中直接定义 组件的页面生命周期
+5. 父子组件通信的三个方式
+      属性绑定
+      事件绑定
+      获取组件实例
+        通过 this.selectComponent("id 或者 class 选择器") 获取子组件实例对象
+        基于此, 直接访问子组件的属性和方法
+6. behaviors 中所有可用的节点
+  [常用]
+      property
+      data
+      methods
+      behaviors
+  [不常用]
+      created
+      attached
+      ready
+      moved
+      detached
+  同名 behavior 属性问题:
+          同名对象属性, 则会进行合并对象操作。
+          同名属性, 则以覆盖规则： 组件 > 父 behavior > 子 behavior 、 靠后的 behavior > 靠前的 behavior的规则进行覆盖操作。
+7. 组件的样式隔离
+    通过选项可设置隔离策略
+      options.styleIsolation
+        --- isolated (父子样式互不影响)
+            apply-shared (父样式影响子样式, 子样式不影响父样式)
+            shared  (父子样式相互影响)
+8. 组件的纯数据字段, 可提升小程序的性能
+    通过选项进行定义
+        --- options.pureDataPattern
+          需要匹配正则表达式, 通常匹配规则为 /^_/
+            (以_开头的数据字段均为纯数据字段)
+9. 显示 API Promise化
+    需依赖于 miniprogram-api-promise 第三方 npm 包
+    npm install --save miniprogram-api-promise
+10. 小程序的全局数据共享方案
+  用 mobx-miniprogram 和 mobx-miniprogram-bindings 实现
+    mobx-miniprogram 用于创建 Store 实例对象
+    mobx-miniprogram-bindings 用来把 Store 中的共享数据或方法, 绑定到组件或页面中使用
+    npm install --save mobx-miniprogram@4.13.2 mobx-miniprogram-bindings@1.2.1
+11. 将 Store 中的成员绑定至 页面 中
+  import { createStoreBindings } from 'mobx-miniprogram-bindings'
+12. 将 Store 中的成员绑定至 组件 中
+  import { storeBindingsBehavior } from 'mobx-miniprogram-bindings'

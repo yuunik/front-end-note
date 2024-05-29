@@ -1,0 +1,104 @@
+1.git 配置用户信息
+  -版本号查询
+      git -v
+
+  -用户名配置
+      git config --global user.name "XXX"
+
+  -邮箱配置
+      git config --global user.email "XXX@XXX.com"
+
+  -配置查询
+      git config --list
+2.git 仓库:记录文件状态内容的地方,存储着修改的历史记录。
+  -创建 git 仓库
+      git init
+3.git 三个区域:工作区、暂存区、版本库。
+  -暂存指定文件
+      git add [filename]
+
+  -暂存所有改动的文件
+      git add .
+
+  -提交并保存,产生版本快照
+      git commit -m "description"
+
+  -查看暂存区所存放的文件
+      git ls-files
+4.git 文件状态主要分为两个状态,存在于工作区和暂存区的文件被删除后,无法恢复。
+  -未跟踪,用[U]表示
+
+  -已跟踪,用[A]表示,已跟踪状态还可分为（新添加、未修改、已修改）
+
+  -文件提交至版本库后,状态会变为未修改状态,用['']表示
+
+  -提交至版本库后的文件,一经修改,则会变为已修改状态,用[M]表示
+
+  -查看文件状态
+    git status -s
+    ex:[
+      git status -s
+      MM login/index.css     ======> 第一列的字母表示该文件在暂存区的状态,第二列的字母表示该文件在工作区的状态
+    ]
+  5.暂存区的使用。
+    -从暂存区中恢复文件
+      git restore [filename]
+
+    -从暂存区中删除文件
+      git rm --cached [filename]
+
+    -查看文件的提交历史记录
+      git log --oneline
+6.git 回退方式。
+    -git reset --soft [version]
+    (在工作区和暂存区中,会保留版本库内文件以外的所有文件,并让这些文件处于未跟踪的状态)
+
+    -git reset --hard [version]
+    (在工作区和暂存区中,不保留版本库内文件以外的所有文件,并把这些文件全部清空覆盖掉)
+
+    -git reset --hard [version]
+    (在工作区中,仅保留版本库内文件以外的所有文件;在暂存区中,不保留版本库内文件以外的所有文件,并把这些文件全部清空覆盖掉)
+
+当git 产生回退行为时,git log --oneline 只能查看到回退后的git 提交记录。此时若想查看完整的git 提交记录,应使用[git reflog --oneline]
+7.git 删除文件。
+  解决"删除 editor.js 文件,并产生一次版本记录"的需求。
+  1)删除工作区的文件
+  2)需对暂存区的文件进行更新   --git add .
+  3)提交至版本库中,产生新的文件提交记录    --git commit -m "description"
+8.git 忽略文件。
+  可以在.gitignore文件中配置不往git提交的文件,配置后,这些文件将会被git忽略。
+9.git 分支。
+  -创建分支
+    git branch [branchName]
+    （不加分支名时,可查看当前有多少分支名）
+  -切换分支
+    git checkout [branchName]
+10.git 分支的合并、删除、合并。
+  ps:合并分支时,请务必切换回主干git流程master后,再进行 git 分支合并。
+  ----git checkout master   (切换回主干git流程master)
+  -合并分支
+    git merge [branceName]
+  -删除分支
+    git branch -d [branchName]
+  ps:git合并的顺序不以合并的顺序排列,而是以提交记录产生的先后的顺序排列。
+11.git 合并冲突问题。
+  当在不同分支中,对同一文件进行修改后,会产生 git 冲突问题。
+12.git 远程仓库。
+  -本地 git 仓库添加远程仓库原点地址
+  git remote add [onlineName] [onlineURL]
+
+  -本地 git 仓库删除远程仓库原点地址
+  git remote remove [onlineName] [onlineURL]
+
+  -本地 git 仓库推送版本记录到远程仓库
+  git push -u [onlineName] [localBranchName]:[onlineBranchName] （一般情况下,localBranch本地分支和onlineBranch远程分支重名）
+  简写为 git push -u [onlineName] [branchName]
+  完整写法为 git push --set-upstream [onlineName] [localBranchName]:[onlineBranchName]
+13.git 多人协同开发。
+  - 从远程仓库中拉取项目
+  git pull origin master
+  (
+      等价于
+        git fetch origin master:master (获取远程分支记录到本地，未合并)
+        git merge origin/master(把远程分支记录合并到所在分支下)
+  )

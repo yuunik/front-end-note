@@ -1,0 +1,75 @@
+1.可以压缩js文件。
+（
+  在module.exports.output中加上clean属性,可清空之前的输出文件。
+）
+2.可以修改需压缩的目标文件及输出文件。
+3.可以根据html模板文件,自动生成html文件（需要html-webpack-plugin插件）。
+4.可以打包css代码,js文件需引入css文件,否则 webpack 不知道 该css文件 和 该js文件 的嵌套关系。
+（
+  需要 css-loader 和 style-loader 加载器。
+  css-loader加载器用于解析css代码,style-loader加载器用于把解析后的css代码插入到DOM中
+）
+ps:Webpack默认只识别js代码
+5.可以提取css代码，自动生成css文件。
+（
+  需要 mini-css-extract-plugin 插件。
+  好处：css文件可以被浏览器缓存,4中css需插入到js文件,会增加js文件的体积。利用该插件,可减少js文件的体积。
+  该插件不能与加载器 style-loader 一起使用。
+  filename 属性只支持传入相对与输出路径（module.exports.output.path）的路径。
+）
+6.在5中,所生成的css文件并没有被压缩。因此,需要一个插件去对css代码进行压缩操作。
+（
+  需要 css-minimizer-webpack-plugin 插件
+）
+ps:添加 css-minimizer-webpack-plugin 插件,会导致原本对js文件的压缩功能消失,
+需要在 module.exports.optimization.minimizer中加上 `...` 这段代码,才能保留原本的对js文件的压缩功能。
+7.可以打包less文件。把 less 代码编译为 css代码。想要less文件一起打包,则需要在js文件中引入less文件。
+（
+  需要 less 加载器 和 less-loader加载器。less-loader需要配合less软件包使用。
+  less-loader加载器 需要 less加载器 来把less语法进行转换。
+）
+8.可以打包图片文件。Webpack 5开始内置了资源模块打包,无需加载额外的loader加载器。
+当打包的图片文件大于8KB时,会发送一个单独的文件并导出URL地址。
+当打包的图片文件小于8KB时,会导出一个data URI(base 64字符串)。
+在js文件中引入图片文件资源,要用 import 方式。要是网络图片htpp地址,则可以直接写。
+9.可以搭建开发环境。以解决"每次修改代码,都需要重新打包才能运行查看,效率很低"的问题。
+（
+  需要配置 webpack-dev-server 快速开发应用程序。
+  默认将public文件夹提供给浏览器,作为静态资源的浏览目录。
+  默认可以访问 public 文件夹和 dist 文件夹下的静态资源。
+  首次打开的页面默认访问 public 文件夹下的 index.html,因此需做页面跳转。可直接页面跳转至 dist 文件夹下的index.html。
+  ps:
+    1. webpack-dev-server 借助 http 模块创建 8080 端口作为默认的Web服务
+    2. 默认以 public 文件夹作为服务器目录
+    3. webpack-dev-server 根据配置,打包相关代码在内存当中,以 output.path 的值作为服务器根目录,因此可以直接自己拼接访问 dist 目录下内容。
+）
+10.打包模式的选择。分为开发模式（development）和生产模式（production）。
+  可在:
+    1）webpack.config.js 配置文件设置mode选项。
+    2）package.json 命令行设置 mode 参数
+    ps:命令行设置的优先级高于配置文件中的,推荐用命令行设置
+11.解决"在开发模式下用style-loader 内嵌更快，在生产模式下提取css代码"的需求。
+  方案:
+    1) webpack.config.js 配置导出函数,但是局限性大 (只接受 2种模式)
+    2) 借助 cross-env (跨平台通用) 包命令,设置参数,区分环境
+12.解决"前端项目中，开发模式下打印语句生效，生产模式下打印语句失效"的需求。
+（
+  需要 webpack.DefinePlugin插件,这是webpack对象中内置的插件,因此无需下载。
+）
+13.开发环境调错问题。
+（
+  需要source map。
+）
+14.解析别名 alias。配置模块如何解析，创建import 引入路径的别名，来确保模块引入变得更简单。
+  当引入的文件为js文件或者json文件时,可以省略其后缀名。webpack会为其自动拼接".js"或".json"的后缀。
+  一般不建议省略。
+15.解决"开发模式使用本地第三方库，生产模式下使用CDN 加载引入"的需求。
+（
+  1）在html中引入第三方库的 CDN 地址并用模板语法判断
+  2）配置 webpack.config.js 中 externals 外部扩展选项 (防止某些 import 的包被打包)
+）
+
+在生产环境中,css文件会被单独提取出来,
+在开发环境中,css文件会被嵌入js文件中。
+16. webpack-dev-server 包可以实时检测代码的修改情况, 并自动重新编译并打包。
+17. clean-webpack-plugin 可以自动清除输出文件夹下的所有文件。

@@ -1,0 +1,6 @@
+1. Vscode 插件
+  1） 快速 uni-app 页面 uni-create-view
+  2） uni-app 代码提示 uni-helper
+  3） 鼠标悬停查文档  uniapp小程序扩展
+2. 提供 uni-ui 的组件类型
+@uni-helper/uni-ui-types

@@ -1,0 +1,32 @@
+1. 编程式导航, 如何跳转传参?
+  1) path 路径跳转
+    -1 query 传参
+    -2 动态路由传参（需要配置动态路由）
+  2) name 命名路由传参
+    -1 query 传参
+    -2 动态路由传参（需要配置动态路由）
+2. 查询参数传参适用于多个参数传参,
+   动态路由传参适用于单个参数传参
+3. keep-alive 用于组件缓存,
+  被缓存的组件会多 active 和 deactive 两个生命周期钩子,
+  也不会执行created、 mounted 、 destroyed 这三个生命周期钩子
+4. vuex
+  state     用于存放状态数据
+  actions   用于异步操作
+  mutations 用于同步操作
+5. Vue 2 中, v-model 为 :value 和 @input 的简写,
+   Vue 3 中, v-model 为 :modelValue 和 @update:modelValue 的简写。
+6. Vue 脚手架
+  下载
+    npm install -g @vue/cli
+    yarn global add @vue/cli
+
+      通过 vue-cli  创建脚手架:
+        vue create <projectName>
+          （采用前端构建工具 webpack）
+      通过 vite 创建脚手架:
+        npm create vue@latest
+        pnpm create vue
+
+        npm init vite-app <project-name>
+        npm init vue@latest
